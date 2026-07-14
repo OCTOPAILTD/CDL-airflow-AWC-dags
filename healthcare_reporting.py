@@ -15,6 +15,7 @@ Airflow features demonstrated:
 from datetime import datetime, timedelta
 
 from airflow import DAG
+from airflow.hooks.base import BaseHook
 from airflow.utils.task_group import TaskGroup
 from airflow.datasets import Dataset
 from airflow.operators.python import PythonOperator
@@ -29,7 +30,7 @@ from sqlalchemy import create_engine, text
 PATIENT_360_DATASET = Dataset("postgres://postgres:5432/airflow/healthcare_dw/dim_patients")
 CLAIMS_DATASET = Dataset("postgres://postgres:5432/airflow/healthcare_dw/fact_claims")
 
-PG_CONN = "REMOVED"
+PG_CONN = BaseHook.get_connection("postgres_default").get_uri()
 
 
 def generate_executive_kpis(**context):

@@ -15,6 +15,7 @@ Airflow features demonstrated:
 from datetime import datetime, timedelta
 
 from airflow import DAG
+from airflow.hooks.base import BaseHook
 from airflow.utils.task_group import TaskGroup
 from airflow.operators.python import PythonOperator, BranchPythonOperator
 from airflow.operators.bash import BashOperator
@@ -27,7 +28,7 @@ import pandas as pd
 from sqlalchemy import create_engine, text
 
 
-PG_CONN = "REMOVED"
+PG_CONN = BaseHook.get_connection("postgres_default").get_uri()
 
 TABLES_TO_CHECK = [
     "healthcare_dw.dim_patients",
